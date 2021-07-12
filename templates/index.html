@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<img src="{{img_url}}" alt="{{name}}" title="{{name}}"  width="600">
+<div class="monster-name">{{name}}</div>
+<div class="input"><span id="typed"></span><span id="to-type"></span></div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        let code = document.getElementById('code');
+        let key = document.getElementById('key');
+
+        $("#to-type").text("{{alphabets}}");
+
+        let chars = "{{alphabets}}".split("");
+        let typed_chars = [];
+        document.addEventListener('keydown', (event)=>{
+            //code.textContent = event.code;
+            //key.textContent = event.key;
+            if (event.key.toLowerCase() == chars[0].toLowerCase()){
+                typed_chars.push(chars[0]);
+                chars.shift();
+                if (chars[0] == " "){
+                    typed_chars.push(chars[0]);
+                    chars.shift();
+                }
+                $("#typed").text(typed_chars.join(""));
+                $("#to-type").text(chars.join(""));
+            }
+            if (chars.length == 0) {
+                window.location.href = "/"
+            }
+        });
+    </script>
+</div>
+{% endblock %}
